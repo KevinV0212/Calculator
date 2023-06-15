@@ -8,7 +8,7 @@ const numbers = numPad.querySelectorAll('.num-btn');
 numbers.forEach(number => {
     number.addEventListener('click', (e) => {
         const symbol = e.target.textContent
-        setDisplay(symbol)
+        addDisplay(symbol)
         })
 
     })
@@ -28,60 +28,69 @@ operations.forEach(operation => {
 
 function handleOperation(e)
 {
+    // handles '=' button behavior
     if (e.target.textContent === '=')
     {
-        num2 = getDisplay();
-        clearDisplay();
+        if (!num1)
+        {
+            return;
+        }
+       
+        num2 = +getDisplay();
         setDisplay(operate(num1, operator, num2))
     }
+    // first operand has not been set by a non '=' operator
     else if (!num1)
     {
-        num1 = getDisplay();
+        num1 = +getDisplay();
         operator = e.target.textContent;
         clearDisplay();
     }
-        // call operate with what ever is in the global variables and display.
-        
-    // if no there are no operands, capture display into num1 and the operation
-
-    // if 'num1' is captured but not 'num2' then:
-        // if display is nothing, then return soft error then clear all
-        // else, capture 'num2', call operate, then set num1 into the value of operate
-    // if 
-
-    // remember to do error checking
+    // a non '=' operator already has been logged
+    else if(operator)
+    {
+        // solves first expression then saves it as an operand for the next
+        num2 = +getDisplay();
+        num1 = +operate(num1, operator, num2);
+        operator = e.target.textContent
+        num2 = null;
+        clearDisplay();
+    }
+       
 }
 // returns the result between 2 operands based on an inputted 'operator'
-function operate (n1, op, n2)
+function operate(n1, op, n2)
 {
-    let retval = 0;
-    // if (num1 && (!operator || !num2))
-    // {
-    //     return num1;
-    // }
-    // else if (num1 && operator || !num2))
-    // {
+    // if there is only the first operand present
+    if (n1 && !op && !n2)
+    {
+        return n1;
+    }
+    // if the second operand is missing
+    else if (n1 && op && !n2)
+    {
+        return ("ERROR");
 
-    // }
-    //     return;
-    
-    // returns output of operation matching 'operator'
+    }
+
+    let retval = 0;
     switch (operator)
     {
         case '+':
-            retval = (+num1) + (+num2);
+            retval = add(n1, n2);
             break;
         case '-':
-            retval = (+num1) - (+num2);
+            retval = subtract(n1, n2);
             break;
         case 'x':
-            retval = (+num1) * (+num2);
+            retval = multiply(n1, n2);
             break;
         case '/':
-            retval = (+num1) / (+num2);
+            retval = divide(n1, n2);
             break;
     }
-    num1 = num2 = operand = null;
+    clearValues();
+    clearDisplay();
     return retval;
 
 }
@@ -93,30 +102,33 @@ clearBtn.addEventListener('click', () => {
     })
 
 // add functions for 4 basic arithmetic operations;
-function add()
+function add(n1, n2)
 {
-
+    return n1 + n2;
 }
 
-function subtract()
+function subtract(n1, n2)
 {
-
+    return n1 - n2;
 }
 
-function multiply()
+function multiply(n1, n2)
 {
-
+    return n1 * n2;
 }
 
-function divide()
+function divide(n1, n2)
 {
-
+    return n1 / n2;
 }
 
 // functions for interacting with display data
-function setDisplay(content)
+function addDisplay(content)
 {
     topBar.textContent += content;
+}
+function setDisplay(content){
+    topBar.textContent = content;
 }
 
 function getDisplay()
@@ -127,5 +139,5 @@ function clearDisplay(){
     topBar.textContent = '';
 }
 function clearValues(){
-    num1 = num2 = operand = null;
+    num1 = num2 = operator = null;
 }
