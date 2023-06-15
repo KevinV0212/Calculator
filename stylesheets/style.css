@@ -18,3 +18,7 @@ body{
     justify-content:center;
     align-items:center;
 }
+.top-bar{
+    border:1px solid black;
+    text-align:right;
+}
