@@ -101,7 +101,7 @@ function operate(n1, op, n2)
 
 }
 
-const clearBtn = document.querySelector('.clear-btn');
+const clearBtn = document.querySelector('.clr-btn');
 clearBtn.addEventListener('click', () => {
         clearDisplay();
         clearValues();
