@@ -86,10 +86,11 @@ button{
     background-color:whitesmoke;
 }
 
-.op-btn{
+.op-btn, .clr-btn{
     background-color:#f7d065;
 }
+
 .btn-pressed{
-    border-width: 0;
+    border-style:inset;
     filter: brightness(.7);
 }

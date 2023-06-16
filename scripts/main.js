@@ -107,6 +107,15 @@ clearBtn.addEventListener('click', () => {
         clearValues();
     })
 
+// button style change when pressed
+const allButtons = document.querySelectorAll('button');
+allButtons.forEach(button => button.addEventListener('mousedown', (e) => {
+    e.target.classList.add('btn-pressed')
+}))
+allButtons.forEach(button => button.addEventListener('mouseup', (e) => {
+    e.target.classList.remove('btn-pressed')
+}))
+
 // add functions for 4 basic arithmetic operations;
 function add(n1, n2)
 {
