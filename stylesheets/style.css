@@ -2,11 +2,17 @@
     box-sizing:border-box;
     margin:0;
     padding:0;
+    background-color:#f7d065;
 }
 
 body{
     display:flex;
     justify-content:center;
+}
+
+/* remove when done styling*/
+.container *{
+    background-color:white;
 }
 .container{
     width:80%;
@@ -18,7 +24,15 @@ body{
     justify-content:center;
     align-items:center;
 }
-.top-bar{
+.calculator{
+    padding: 20px;
+    background-color:#3A3941;
+}
+button{
+    background-color:white;
+}
+.display{
+    height:20px;
     border:1px solid black;
     text-align:right;
 }

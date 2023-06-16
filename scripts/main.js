@@ -1,10 +1,8 @@
 // references to DOM elements
-const numPad = document.querySelector('.num-pad');
-const topBar = document.querySelector('.top-bar');
-const opPad = document.querySelector('.op-pad');
-const controlPad = document.querySelector('.control-pad');
+const display = document.querySelector('.display');
+
 // add event listeners for all numbers
-const numbers = numPad.querySelectorAll('.num-btn');
+const numbers = document.querySelectorAll('.num-btn');
 numbers.forEach(number => {
     number.addEventListener('click', (e) => {
         const symbol = e.target.textContent
@@ -12,7 +10,7 @@ numbers.forEach(number => {
         })
 
     })
-const button = opPad.querySelector('.op-button');
+const button = document.querySelector('.op-button');
 // concatenates content to existing text in display bar    
 
 
@@ -21,7 +19,7 @@ let num1 = null;
 let operator = null;
 let num2 = null;
 
-const operations = opPad.querySelectorAll('.op-btn');
+const operations = document.querySelectorAll('.op-btn');
 operations.forEach(operation => {
     operation.addEventListener('click', handleOperation)
 })
@@ -35,7 +33,6 @@ function handleOperation(e)
         {
             return;
         }
-       
         num2 = +getDisplay();
         setDisplay(operate(num1, operator, num2))
     }
@@ -55,6 +52,11 @@ function handleOperation(e)
         operator = e.target.textContent
         num2 = null;
         clearDisplay();
+
+        if (!num1){
+            setDisplay("ERROR");
+            clearValues();
+        }
     }
        
 }
@@ -62,14 +64,18 @@ function handleOperation(e)
 function operate(n1, op, n2)
 {
     // if there is only the first operand present
-    if (n1 && !op && !n2)
+    if (!n1)
+    {
+        return null;
+    }
+    else if (n1 && !op && !n2)
     {
         return n1;
     }
     // if the second operand is missing
     else if (n1 && op && !n2)
     {
-        return ("ERROR");
+        return null;
 
     }
 
@@ -95,7 +101,7 @@ function operate(n1, op, n2)
 
 }
 
-const clearBtn = controlPad.querySelector('.clear-btn');
+const clearBtn = document.querySelector('.clear-btn');
 clearBtn.addEventListener('click', () => {
         clearDisplay();
         clearValues();
@@ -125,18 +131,18 @@ function divide(n1, n2)
 // functions for interacting with display data
 function addDisplay(content)
 {
-    topBar.textContent += content;
+    display.textContent += content;
 }
 function setDisplay(content){
-    topBar.textContent = content;
+    display.textContent = content;
 }
 
 function getDisplay()
 {
-    return topBar.textContent;
+    return display.textContent;
 }
 function clearDisplay(){
-    topBar.textContent = '';
+    display.textContent = '';
 }
 function clearValues(){
     num1 = num2 = operator = null;
