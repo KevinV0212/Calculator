@@ -122,14 +122,23 @@ clearBtn.addEventListener('click', () => {
         clearValues();
     })
 
-// button style change when pressed
+// button style change and sound when pressed
 const allButtons = document.querySelectorAll('button');
+const audio = document.querySelector('audio');
 allButtons.forEach(button => button.addEventListener('mousedown', (e) => {
     e.target.classList.add('btn-pressed')
+    audio.currentTime = 0;
+    audio.play();
 }))
-allButtons.forEach(button => button.addEventListener('mouseup', (e) => {
-    e.target.classList.remove('btn-pressed')
-}))
+allButtons.forEach(button => {
+    button.addEventListener('mouseup', (e) => {
+        e.target.classList.remove('btn-pressed')
+    })
+    button.addEventListener('mouseleave', (e) => {
+        e.target.classList.remove('btn-pressed')
+    })
+})
+
 
 // add functions for 4 basic arithmetic operations;
 function add(n1, n2)
