@@ -1,3 +1,6 @@
+// flag that sets when screen will be overwritten when numbers are pressed
+let overwrite = false;
+
 // references to DOM elements
 const display = document.querySelector('.display');
 
@@ -6,10 +9,20 @@ const numbers = document.querySelectorAll('.num-btn');
 numbers.forEach(number => {
     number.addEventListener('click', (e) => {
         const symbol = e.target.textContent
-        addDisplay(symbol)
-        })
-
+        
+        // only overwrite the first digit of a number so the rest can be typed
+        if (overwrite)
+        {
+            setDisplay(symbol);
+            overwrite = false;
+        }
+            
+        else
+        {
+            addDisplay(symbol)
+        }
     })
+})
 const button = document.querySelector('.op-button');
 // concatenates content to existing text in display bar    
 
@@ -41,7 +54,7 @@ function handleOperation(e)
     {
         num1 = +getDisplay();
         operator = e.target.textContent;
-        clearDisplay();
+        overwrite = true;
     }
     // a non '=' operator already has been logged
     else if(operator)
@@ -51,7 +64,9 @@ function handleOperation(e)
         num1 = +operate(num1, operator, num2);
         operator = e.target.textContent
         num2 = null;
-        clearDisplay();
+
+        setDisplay(num1);
+        overwrite = true;
 
         if (!num1){
             setDisplay("ERROR");
