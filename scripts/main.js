@@ -1,7 +1,10 @@
+
+
 // flag that sets when screen will be overwritten when numbers are pressed
 let overwrite = false;
 let decimalOn = false;
 let zeroDivide = false;
+let digitsFull = false;
 // references to DOM elements
 const display = document.querySelector('.display');
 const message = document.querySelector('.message');
@@ -181,8 +184,14 @@ function divide(n1, n2)
 // concatenates 'content' onto display
 function addDisplay(content)
 {
-    display.textContent += content;
-    handleMessages();
+    if (isDisplayFull()){
+        handleMessages();
+    }
+    else
+    {
+        display.textContent += content;
+        handleMessages();
+    }
 }
 
 // overwrites display with 'content'
@@ -216,6 +225,7 @@ function handleMessages(){
         zeroDivide = false;
         setMessage('why?!?!?!');
     }
+    else if (isDisplayFull()) setMessage('num too big')
     else if (text === '69') setMessage('nice');
     else if (text === '420') setMessage('blaze it');
     else if (text === '80085') setMessage('( ͡° ͜ʖ ͡°)')
@@ -226,4 +236,12 @@ function handleMessages(){
 // overwrites the value of 'message' div
 function setMessage(content){
     message.textContent = content;
+}
+
+
+// number of characters that fit in the display
+const DISPLAY_SIZE = 22;
+
+function isDisplayFull(){
+    return display.textContent.length >= DISPLAY_SIZE;
 }
