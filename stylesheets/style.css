@@ -28,7 +28,7 @@ body{
     width:400px;
     height:600px;
     padding: 30px;
-    background-color:#3A3941;
+    background: linear-gradient(90deg, #3A3941 0 80%, #2a2a30);
     border-radius:15px;
     box-shadow:15px 15px;
     display:flex;
@@ -57,7 +57,7 @@ body{
 .clr-btn{
     width:auto;
     flex:none;
-    align-self:none;
+    align-self:flex-start;
 }
 
 .calc-body{
