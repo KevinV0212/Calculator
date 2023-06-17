@@ -1,8 +1,10 @@
 // flag that sets when screen will be overwritten when numbers are pressed
 let overwrite = false;
-
+let decimalOn = false;
+let zeroDivide = false;
 // references to DOM elements
 const display = document.querySelector('.display');
+const message = document.querySelector('.message');
 
 // add event listeners for all numbers
 const numbers = document.querySelectorAll('.num-btn');
@@ -16,7 +18,6 @@ numbers.forEach(number => {
             setDisplay(symbol);
             overwrite = false;
         }
-            
         else
         {
             addDisplay(symbol)
@@ -47,7 +48,15 @@ function handleOperation(e)
             return;
         }
         num2 = +getDisplay();
-        setDisplay(operate(num1, operator, num2))
+
+        const result = operate(num1, operator, num2)
+        if (result)
+            setDisplay(result);
+        else
+        {
+            setDisplay("ERROR");
+            overwrite = true;
+        }
     }
     // first operand has not been set by a non '=' operator
     else if (!num1)
@@ -88,10 +97,9 @@ function operate(n1, op, n2)
         return n1;
     }
     // if the second operand is missing
-    else if (n1 && op && !n2)
+    else if (n1 && op && !n2 && n2 !== 0)
     {
         return null;
-
     }
 
     let retval = 0;
@@ -107,7 +115,14 @@ function operate(n1, op, n2)
             retval = multiply(n1, n2);
             break;
         case '/':
-            retval = divide(n1, n2);
+            if (n2 === 0){
+                retval = null;
+                zeroDivide = true;
+            }
+            else
+            {
+                retval = divide(n1, n2);
+            }
             break;
     }
     clearValues();
@@ -162,21 +177,53 @@ function divide(n1, n2)
 }
 
 // functions for interacting with display data
+
+// concatenates 'content' onto display
 function addDisplay(content)
 {
     display.textContent += content;
-}
-function setDisplay(content){
-    display.textContent = content;
+    handleMessages();
 }
 
+// overwrites display with 'content'
+function setDisplay(content){
+    display.textContent = content;
+    handleMessages();
+}
+
+// returns display content
 function getDisplay()
 {
     return display.textContent;
 }
+
+// clears display content (does not clear underlying values)
 function clearDisplay(){
     display.textContent = '';
+    message.textContent = '';
 }
+
+// clears underlying values
 function clearValues(){
     num1 = num2 = operator = null;
+}
+
+// sets 'message' div to something depending on the display value
+function handleMessages(){
+    const text = display.textContent;
+    if (zeroDivide)
+    {
+        zeroDivide = false;
+        setMessage('why?!?!?!');
+    }
+    else if (text === '69') setMessage('nice');
+    else if (text === '420') setMessage('blaze it');
+    else if (text === '80085') setMessage('( ͡° ͜ʖ ͡°)')
+    else if (text === '42') setMessage('= life')
+    else setMessage('');
+}
+
+// overwrites the value of 'message' div
+function setMessage(content){
+    message.textContent = content;
 }
