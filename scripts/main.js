@@ -130,6 +130,19 @@ function operate(n1, op, n2)
     }
     clearValues();
     clearDisplay();
+    
+    // trims retval to fit on display
+    if (isTooBig(`${retval}`))
+    {
+        if (isDecimal(retval))
+        {
+            return trimDecimal(retval)
+        }
+        else
+        {
+            return trimNumber(retval);
+        }
+    }
     return retval;
 
 }
@@ -225,7 +238,7 @@ function handleMessages(){
         zeroDivide = false;
         setMessage('why?!?!?!');
     }
-    else if (isDisplayFull()) setMessage('num too big')
+    else if (isDisplayFull()) setMessage('TOO BIG')
     else if (text === '69') setMessage('nice');
     else if (text === '420') setMessage('blaze it');
     else if (text === '80085') setMessage('( ͡° ͜ʖ ͡°)')
@@ -243,5 +256,45 @@ function setMessage(content){
 const DISPLAY_SIZE = 22;
 
 function isDisplayFull(){
-    return display.textContent.length >= DISPLAY_SIZE;
+    return isTooBig(display.textContent);
+}
+// checks if 'content' will fit within the displayo  
+function isTooBig(content){
+    return content.length >= DISPLAY_SIZE;
+}
+
+// completely completely removes digits that don't fit on display
+function trimNumber(num){
+    return +numText.slice(0, DISPLAY_SIZE);
+}
+
+// checks if number has a decimal
+function isDecimal(num){
+    const numText = `${num}`
+    return numText.includes('.')
+}
+// rounds a number to a certain number of decimal places FIGURE THIS OUT
+function round(num, decimalPlaces = 0)
+{
+    return Math.round(num * (10 ** decimalPlaces)) / (10 ** decimalPlaces) 
+}
+
+// rounds decimal if possible
+function trimDecimal(num){
+    let retVal;
+    const numText = `${num}`
+    {
+        const decimalIndex = numText.indexOf('.');
+        // if the decimal is beyond screen limit, cut off 'num' at screen limit
+        if (numText.indexOf('.') >= DISPLAY_SIZE)
+        {
+            retval = trimNumber(num);
+        }
+        else
+        {
+            // rounds to number of digits  left in display after decimal
+            retval = round (num, DISPLAY_SIZE - decimalIndex - 1)
+        }      
+        return retval;
+    }
 }
