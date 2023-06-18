@@ -101,6 +101,10 @@ button{
     border-radius:10px;
     border: 5px outset black;
 }
+button:hover{
+    filter: brightness(.7);
+    cursor: pointer;
+}
 .num-btn{
     background-color:whitesmoke;
 }
