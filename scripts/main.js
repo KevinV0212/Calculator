@@ -130,7 +130,6 @@ function operate(n1, op, n2)
             break;
     }
     clearValues();
-    clearDisplay();
     
     // trims retval to fit on display
     if (isTooBig(`${retval}`))
