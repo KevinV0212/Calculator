@@ -213,6 +213,7 @@ allButtons.forEach(button => {
     })
 })
 
+// event listener for decimal button
 const decBtn = document.querySelector('.dec-btn')
 decBtn.addEventListener('click', (e) => {
     if (!decimalOn)
@@ -220,6 +221,19 @@ decBtn.addEventListener('click', (e) => {
         addDisplay('.')
         decimalOn = true;
     }
+})
+
+// event listener for decimal key on keyboard
+window.addEventListener('keydown', (e) => {
+    if (e.key === '.')
+    {
+        if (!decimalOn)
+        {
+            addDisplay('.')
+            decimalOn = true;
+        }
+    }
+       
 })
 
 
