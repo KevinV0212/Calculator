@@ -253,6 +253,14 @@ function handleMessages(){
     else if (text === '420') setMessage('blaze it');
     else if (text === '80085') setMessage('( ͡° ͜ʖ ͡°)')
     else if (text === '42') setMessage('= life')
+    else if (text === '666') setMessage('el diablo')
+    else if (text === '777') setMessage('jackpot')
+    else if (text === '69420' || text === '42069') setMessage('wowiezowie')
+    else if (text === '911') setMessage('police!')
+    else if (text === '13') setMessage('unlucky')
+    else if (text === '404') setMessage('not found')
+    else if (text === '3.14') setMessage('pi')
+    else if (text === '1225') setMessage('hohoho')
     else setMessage('');
 }
 
