@@ -52,15 +52,30 @@ let num1 = null;
 let operator = null;
 let num2 = null;
 
+// event listener for operation buttons
 const operations = document.querySelectorAll('.op-btn');
 operations.forEach(operation => {
-    operation.addEventListener('click', handleOperation)
+    operation.addEventListener('click', (e) => {
+        handleOperation(e.target.textContent)
+    })
 })
 
-function handleOperation(e)
+// event listener for keyboard operation keys
+window.addEventListener('keydown', (e) =>{
+    op = e.key;
+    if (op === '+' || op === '-' || op === 'x' || op === '*' || 
+        op === '/' || op === '=' || op === 'Enter')
+    {
+        handleOperation(op);
+    }
+})
+
+
+// maps and event it to an operation based on 'num1' 'num2' and 'operator'
+function handleOperation(op)
 {
-    // handles '=' button behavior
-    if (e.target.textContent === '=')
+    // handles '=' button behavior; 'Enter' is for keyboard input
+    if (op === '=' || op === 'Enter')
     {
         if (!num1)
         {
@@ -81,7 +96,7 @@ function handleOperation(e)
     else if (!num1)
     {
         num1 = +getDisplay();
-        operator = e.target.textContent;
+        operator = op;
         overwrite = true;
     }
     // a non '=' operator already has been logged
@@ -90,7 +105,7 @@ function handleOperation(e)
         // solves first expression then saves it as an operand for the next
         num2 = +getDisplay();
         num1 = +operate(num1, operator, num2);
-        operator = e.target.textContent
+        operator = op
         num2 = null;
 
         setDisplay(num1);
@@ -130,7 +145,10 @@ function operate(n1, op, n2)
         case '-':
             retval = subtract(n1, n2);
             break;
+        
+        // second case is for keyboard multiplication operator
         case 'x':
+        case '*':
             retval = multiply(n1, n2);
             break;
         case '/':
