@@ -213,6 +213,39 @@ allButtons.forEach(button => {
     })
 })
 
+// button style changes and sound when matching key is pressed
+window.addEventListener('keydown', (e) => {
+    const key = e.key;
+    const btn = findButtonMatch(key);
+    if (btn)
+    {
+        btn.classList.add('btn-pressed')
+        audio.currentTime = 0;
+        audio.play();
+    }
+})
+window.addEventListener('keyup', (e) => {
+    const key = e.key;
+    const btn = findButtonMatch(key)
+    if (btn)
+    {
+        btclassList.remove('btn-pressed')
+    }
+})
+
+// finds a button that matches key
+function findButtonMatch(key)
+{
+    if (key === '*')
+        return document.querySelector(`button[data-key='x']`);
+    else if (key === 'Enter')
+        return document.querySelector(`button[data-key='=']`);
+    else
+    {
+        return document.querySelector(`button[data-key='${key}']`);
+    }
+}
+
 // event listener for decimal button
 const decBtn = document.querySelector('.dec-btn')
 decBtn.addEventListener('click', (e) => {
