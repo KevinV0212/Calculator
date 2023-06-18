@@ -229,7 +229,7 @@ window.addEventListener('keyup', (e) => {
     const btn = findButtonMatch(key)
     if (btn)
     {
-        btclassList.remove('btn-pressed')
+        btn.classList.remove('btn-pressed')
     }
 })
 
