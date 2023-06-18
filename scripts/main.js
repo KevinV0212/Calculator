@@ -10,27 +10,42 @@ let digitsFull = false;
 const display = document.querySelector('.display');
 const message = document.querySelector('.message');
 
-// add event listeners for all numbers
+// add event listeners for all number buttons
 const numbers = document.querySelectorAll('.num-btn');
 numbers.forEach(number => {
     number.addEventListener('click', (e) => {
-        const symbol = e.target.textContent
+        const num = e.target.textContent
         
         // only overwrite the first digit of a number so the rest can be typed
         if (overwrite)
         {
-            setDisplay(symbol);
+            setDisplay(num);
             resetFlags();
         }
         else
         {
-            addDisplay(symbol)
+            addDisplay(num)
         }
     })
 })
 const button = document.querySelector('.op-button');
-// concatenates content to existing text in display bar    
 
+// add event listener for number input from keyboard
+window.addEventListener('keydown', (e) =>{
+    const num = e.key
+    if (!Number.isInteger(+num))
+        return;
+    // only overwrite the first digit of a number so the rest can be typed
+    if (overwrite)
+    {
+        setDisplay(num);
+        resetFlags();
+    }
+    else
+    {
+        addDisplay(num)
+    }
+})
 
 
 let num1 = null;
@@ -183,6 +198,7 @@ decBtn.addEventListener('click', (e) => {
         decimalOn = true;
     }
 })
+
 
 // add functions for 4 basic arithmetic operations;
 function add(n1, n2)
