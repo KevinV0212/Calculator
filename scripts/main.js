@@ -1,4 +1,5 @@
-
+// number of characters that fit in the display
+const DISPLAY_SIZE = 22;
 
 // flag that sets when screen will be overwritten when numbers are pressed
 let overwrite = false;
@@ -19,7 +20,7 @@ numbers.forEach(number => {
         if (overwrite)
         {
             setDisplay(symbol);
-            overwrite = false;
+            resetFlags();
         }
         else
         {
@@ -170,6 +171,14 @@ allButtons.forEach(button => {
     })
 })
 
+const decBtn = document.querySelector('.dec-btn')
+decBtn.addEventListener('click', (e) => {
+    if (!decimalOn)
+    {
+        addDisplay('.')
+        decimalOn = true;
+    }
+})
 
 // add functions for 4 basic arithmetic operations;
 function add(n1, n2)
@@ -223,6 +232,7 @@ function getDisplay()
 function clearDisplay(){
     display.textContent = '';
     message.textContent = '';
+    resetFlags();
 }
 
 // clears underlying values
@@ -252,15 +262,13 @@ function setMessage(content){
 }
 
 
-// number of characters that fit in the display
-const DISPLAY_SIZE = 22;
+// checks if 'content' will fit within the displayoed 
+function isTooBig(content){
+    return content.length >= DISPLAY_SIZE;
+}
 
 function isDisplayFull(){
     return isTooBig(display.textContent);
-}
-// checks if 'content' will fit within the displayo  
-function isTooBig(content){
-    return content.length >= DISPLAY_SIZE;
 }
 
 // completely completely removes digits that don't fit on display
@@ -297,4 +305,11 @@ function trimDecimal(num){
         }      
         return retval;
     }
+}
+
+function resetFlags(){
+    overwrite = false;
+    decimalOn = false;
+    zeroDivide = false;
+    digitsFull = false;
 }
