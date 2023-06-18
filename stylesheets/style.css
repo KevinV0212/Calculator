@@ -109,7 +109,7 @@ button:hover{
     background-color:whitesmoke;
 }
 
-.op-btn, .clr-btn{
+.op-btn, .clr-btn, .backspace-btn{
     background-color:#f7d065;
 }
 

@@ -146,12 +146,17 @@ function operate(n1, op, n2)
     return retval;
 
 }
-
+// adding clear button functionality
 const clearBtn = document.querySelector('.clr-btn');
 clearBtn.addEventListener('click', () => {
         clearDisplay();
         clearValues();
     })
+
+// adding backspace button functionality
+const backspaceBtn = document.querySelector('.backspace-btn');
+backspaceBtn.addEventListener('click', handleBackspace);
+
 
 // button style change and sound when pressed
 const allButtons = document.querySelectorAll('button');
@@ -319,4 +324,13 @@ function resetFlags(){
     decimalOn = false;
     zeroDivide = false;
     digitsFull = false;
+}
+
+function handleBackspace()
+{
+    const text = getDisplay();
+    if (text.length > 0)
+    {
+        setDisplay(text.slice(0, -1));
+    }
 }
