@@ -168,10 +168,15 @@ clearBtn.addEventListener('click', () => {
         clearValues();
     })
 
-// adding backspace button functionality
+// adding backspace button functionality 
 const backspaceBtn = document.querySelector('.backspace-btn');
 backspaceBtn.addEventListener('click', handleBackspace);
 
+// add event listener for keyboard backspace
+window.addEventListener('keydown', (e) => {
+    if (e.key === 'Backspace')
+        handleBackspace();
+})
 
 // button style change and sound when pressed
 const allButtons = document.querySelectorAll('button');
